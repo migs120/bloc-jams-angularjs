@@ -1,6 +1,7 @@
  (function() {
+     ///*
      function Fixtures() {
-         var Fixtures = {};
+         
          
               var albumPicasso = {
          title: 'The Colors',
@@ -16,6 +17,7 @@
              { title: 'Magenta', duration: '374.22', audioUrl: '/assets/music/magenta' }
          ]
      };
+        
  
      var albumMarconi = {
          title: 'The Telephone',
@@ -33,9 +35,22 @@
      };
          
          
+      var Fixtures = { albumPicasso, albumMarconi };
+     
+         
     Fixtures.getAlbum = function() {
                 return albumPicasso;
               };
+         
+    Fixtures.getCollection = function(n){
+                                    var collection = [];
+                                    for(var i = 0; i < n; i++)
+                                    { collection.push(albumPicasso) }
+                                  
+                                    return collection;
+        
+                          
+                                }
          
          return Fixtures;
      }
@@ -43,4 +58,5 @@
      angular
          .module('blocJams')
          .factory('Fixtures', Fixtures);
+// */
  })();
