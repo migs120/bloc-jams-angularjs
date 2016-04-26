@@ -3,25 +3,26 @@
           var SongPlayer = {};
           var currentSong = null;
          
-          /**
-          * @desc Buzz object audio file
-          * @type {Object}
-          */
+          
+          // @desc Buzz object audio file
+          // @type {Object}
+          
           var currentBuzzObject = null;
          
          
-         /**
-         * @function setSong
-         * @desc Stops currently playing song and loads new audio file as currentBuzzObject
-         * @param {Object} song
-         */
+         
+         // @function setSong
+         // @desc Stops currently playing song and loads new audio file as currentBuzzObject
+         // @param {Object} song
+         
           var setSong = function(song) {
                                         if (currentBuzzObject) {
                                                                 currentBuzzObject.stop();
                                                                 currentSong.playing = null;
                                                                }
 
-                                        currentBuzzObject = new buzz.sound(song.audioUrl, {
+                                        currentBuzzObject = new buzz.sound(
+                                                                            song.audioUrl, {
                                                                                             formats: ['mp3'],
                                                                                             preload: true
                                                                                           }
@@ -31,7 +32,11 @@
                                      };
 
          
-         
+         var playSong = function(){
+                                   currentBuzzObject.play()
+                                   currentSong.playing = true;
+             
+                                  }
          
          
          
@@ -39,14 +44,16 @@
                                                if (currentSong !== song) {
                                                                           setSong(song);
 
-                                                                          currentBuzzObject.play();   
+                                                                         // currentBuzzObject.play();
+                                                                          playSong();
                                                                          }
               
               
                                             else if (currentSong === song) {
                                                                              if (currentBuzzObject.isPaused()) {
-                                                                                                                 currentBuzzObject.play();
-                                                                                                                 song.playing = true;
+                                                                                                                 playSong();
+                                                                                                                 //currentBuzzObject.play();
+                                                                                                                 //song.playing = true;
                                                                                                                }
                                                                            }  
                                          };
@@ -67,40 +74,6 @@
  })();
 
 
-
-/*
- (function () {
-     function SongPlayer() {
-         var SongPlayer = {};
-         var currentSong = null;
-         var currentBuzzObject = null;
-
-         SongPlayer.play = function (song) {
-             if (currentSong !== song) {
-                 if (currentBuzzObject) {
-                     currentBuzzObject.stop();
-                 }
-
-                 currentBuzzObject = new buzz.sound(song.audioUrl, {
-                     formats: ['mp3']
-                     , preload: true
-                 });
-                 currentSong = song;
-
-                 currentBuzzObject.play();
-             }
-         };
-
-
-
-         return SongPlayer;
-     }
-
-     angular
-         .module('blocJams')
-         .factory('SongPlayer', SongPlayer);
- })();
-*/
 
 
 
