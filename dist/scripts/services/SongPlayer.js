@@ -1,11 +1,16 @@
- (function() {
+
+
+(function() {
     // function SongPlayer() {
       function SongPlayer(Fixtures) {
           var SongPlayer = {};
+          var currentAlbum = Fixtures.getAlbum();
           
           var getSongIndex = function(song) {
                                              return currentAlbum.songs.indexOf(song);
                                             };
+          
+          SongPlayer.getSongIndex = getSongIndex;
          // var currentSong = null;
         
           
@@ -14,7 +19,7 @@
           
           var currentBuzzObject = null;
          
-         var currentAlbum = Fixtures.getAlbum();
+         
            
          SongPlayer.currentSong = null;
          // @function setSong
@@ -46,7 +51,11 @@
                                   }
          
          
-         
+         var stopSong = function(song){
+             
+                                         currentBuzzObject.stop();
+                                         SongPlayer.currentSong.playing = null;
+                                     }
          
          
          
@@ -84,8 +93,9 @@
                                              var currentSongIndex = getSongIndex(SongPlayer.currentSong);
                                              currentSongIndex--;
                                              if (currentSongIndex < 0) {
-                                                                         currentBuzzObject.stop();
-                                                                         SongPlayer.currentSong.playing = null;
+                                                                         //currentBuzzObject.stop();
+                                                                         //SongPlayer.currentSong.playing = null;
+                                                                        stopSong();
                                                                        }
                                              else {
                                                      var song = currentAlbum.songs[currentSongIndex];
@@ -93,15 +103,51 @@
                                                      playSong(song);
                                                  }
                                             };
+          
+          
+          
+          
+           SongPlayer.next = function(song) {  
+               
+                                           //  /*
+                                             var currentSongIndex = getSongIndex(SongPlayer.currentSong);
+                                             currentSongIndex++;
+                                             if (currentSongIndex > currentAlbum.songs.length-1) {
+                                                                        // currentBuzzObject.stop();
+                                                                         //SongPlayer.currentSong.playing = null;
+                                                                        stopSong();
+                                                                       }
+                                             else {
+                                                     var song = currentAlbum.songs[currentSongIndex];
+                                                     setSong(song);
+                                                     playSong(song);
+                                                 }
+                                           //  */
+               
+                                            };
+          
+          
+          
+              SongPlayer.peakhole = function(){
+                             peakhole.push(SongPlayer, currentAlbum.songs.length, getSongIndex())
+                                        }
+        
+          
+          
+          peakhole.push(SongPlayer, currentAlbum.songs.length)
+          
          
          
-         
+        
           return SongPlayer;
      }
  
      angular
          .module('blocJams')
          .factory('SongPlayer', SongPlayer);
+    
+    
+     
  })();
 
 
