@@ -28,9 +28,9 @@
         </div>
         <div class="control-group volume">
             <span class="icon ion-volume-high"></span>
-            <div class="seek-bar">
+             <seek-bar on-change="playerBar.songPlayer.setVolume(value)"></seek-bar>
                 <div class="fill"></div>
-                <div class="thumb"></div>
+                <div class="thumb"  ng-mousedown="playerBar.songPlayer.trackThumb()" ></div>
             </div>
         </div>
     </div>

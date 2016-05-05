@@ -31,6 +31,8 @@
          // @function setSong
          // @desc Stops currently playing song and loads new audio file as currentBuzzObject
          // @param {Object} song
+          
+          SongPlayer.volume = null;
          
           var setSong = function(song) {
                                         if (currentBuzzObject) {
@@ -149,6 +151,20 @@
                                                                              currentBuzzObject.setTime(time);
                                                                             }
                                                     };
+          
+          SongPlayer.setVolume = function(volume) {
+                                                    if (currentBuzzObject) {
+                                                                             currentBuzzObject.setVolume(volume);
+                                                                           }
+                                                 };
+          SongPlayer.trackThumb = function() { console.log("trackThumb for volume!!")
+                                                 $document.bind(
+                                                                'mouseup.thumb', function(){
+                                                                                            $document.unbind('mousemove.thumb');
+                                                                                             $document.unbind('mouseup.thumb');
+                                                                                            }
+                                                                 ); 
+                                              };
           
           
           
