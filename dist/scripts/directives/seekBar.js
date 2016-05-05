@@ -23,11 +23,25 @@
                              templateUrl: '/templates/directives/seek_bar.html',                                                                                                   
                              replace: true,
                              restrict: 'E',
-                             scope: { },
+                             scope: {
+                                     onChange: '&'
+                                    },
                              link: function(scope, element, attributes) {
                                                                          scope.value = 0;
                                                                          scope.max = 100;
                                                                          var seekBar = $(element);
+                                 
+                                                                          attributes.$observe(
+                                                                                              'value', function(newValue) {
+                                                                                                                           scope.value = newValue;
+                                                                                                                          }
+                                                                                             );
+
+                                                                          attributes.$observe(
+                                                                                              'max', function(newValue) {
+                                                                                                                         scope.max = newValue;
+                                                                                                                         }
+                                                                                             );
                                                                          var percentString = function () {
                                                                                                           var value = scope.value;
                                                                                                           var max = scope.max;
@@ -51,6 +65,7 @@
                                                                          scope.onClickSeekBar = function(event) {                            //  \|/ -> var seekBar = $(element)
                                                                                                                  var percent = calculatePercent(seekBar, event);
                                                                                                                  scope.value = percent * scope.max;
+                                                                                                                 notifyOnChange(scope.value);
                                                                                                                  console.log(
                                                                                                                               "onClickSeekBar \n -> scope.value",scope.value
                                                                                                                              ,"\n onClickSeekBar \n -> argument(event)",event
@@ -64,11 +79,12 @@
                                                                                                          $document.bind(
                                                                                                                         'mousemove.thumb', function(event) {
                                                                                                                                                              var percent = calculatePercent(seekBar, event);
-                                                                                                                                                            // scope.$apply(function() {
+                                                                                                                                                             scope.$apply(function() {
                                                                                                                                                                                      scope.value = percent * scope.max;
+                                                                                                                                                                                     notifyOnChange(scope.value);
                                                                                                                                                                                       
-                                                                                                                                                                                   //  }
-                                                                                                                                                                      //  );
+                                                                                                                                                                                     }
+                                                                                                                                                                        );
                                                                                                                                                           }
                                                                                                                        );
 
@@ -79,6 +95,11 @@
                                                                                                                                                    }
                                                                                                                        ); 
                                                                                                      };
+                                                                         var notifyOnChange = function(newValue) {
+                                                                                                                 if (typeof scope.onChange === 'function') {
+                                                                                                                                                             scope.onChange({value: newValue});
+                                                                                                                                                           }
+                                                                                                                };
                                  
                                                                         }
                             };
